@@ -1,3 +1,5 @@
+package tasks;
+
 import java.util.Objects;
 
 public class Task {
@@ -64,9 +66,9 @@ public class Task {
 
     // Метод для вывода информации о задаче
     public void printTask() {
-        System.out.println("Task ID: " + getId());
+        System.out.println("tasks.Task ID: " + getId());
         System.out.println("Title: " + getTitle());
         System.out.println("Description: " + getDescription());
-        System.out.println("Status: " + getStatus());
+        System.out.println("tasks.Status: " + getStatus());
     }
 }

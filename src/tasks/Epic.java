@@ -1,6 +1,8 @@
+package tasks;
+
 import java.util.HashMap;
 
-class Epic extends Task {
+public class Epic extends Task {
     private HashMap<Integer, Subtask> subtasks;
 
     public Epic(String title, String description, int id, Status status) {
@@ -29,7 +31,7 @@ class Epic extends Task {
 
     // Метод для вывода списка подзадач на консоль
     public void printSubtasks() {
-        System.out.println("Subtasks of Epic '" + getTitle() + "':");
+        System.out.println("Subtasks of tasks.Epic '" + getTitle() + "':");
         for (Subtask subtask : subtasks.values()) {
             System.out.println("Title: " + subtask.getTitle());
             System.out.println("Description: " + subtask.getDescription());
