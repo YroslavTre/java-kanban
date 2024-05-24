@@ -1,6 +1,6 @@
-package history;
+package main.history;
 
-import tasks.Task;
+import main.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

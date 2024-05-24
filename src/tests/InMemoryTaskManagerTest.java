@@ -1,13 +1,13 @@
-package test;
+package tests;
 
 
-import manager.InMemoryTaskManager;
+import main.manager.InMemoryTaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tasks.Epic;
-import tasks.Status;
-import tasks.Subtask;
-import tasks.Task;
+import main.tasks.Epic;
+import main.tasks.Status;
+import main.tasks.Subtask;
+import main.tasks.Task;
 
 import java.util.List;
 

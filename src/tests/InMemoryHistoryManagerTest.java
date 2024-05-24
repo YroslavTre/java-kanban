@@ -1,10 +1,10 @@
-package test;
+package tests;
 
-import history.InMemoryHistoryManager;
+import main.history.InMemoryHistoryManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tasks.Status;
-import tasks.Task;
+import main.tasks.Status;
+import main.tasks.Task;
 
 import java.util.List;
 

@@ -1,10 +1,11 @@
+package main;
 
-import manager.Managers;
-import manager.TaskManager;
-import tasks.Epic;
-import tasks.Status;
-import tasks.Subtask;
-import tasks.Task;
+import main.manager.Managers;
+import main.manager.TaskManager;
+import main.tasks.Epic;
+import main.tasks.Status;
+import main.tasks.Subtask;
+import main.tasks.Task;
 
 public class Main {
     private static void printAllTasks(TaskManager manager) {
