@@ -15,8 +15,6 @@ public class Task {
         this.status = status;
     }
 
-    // Геттеры и сеттеры
-
     public String getTitle() {
         return title;
     }
@@ -49,8 +47,6 @@ public class Task {
         this.status = status;
     }
 
-    // Переопределение методов equals() и hashCode() для сравнения задач по id
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,11 +60,8 @@ public class Task {
         return Objects.hash(id);
     }
 
-    // Метод для вывода информации о задаче
-    public void printTask() {
-        System.out.println("tasks.Task ID: " + getId());
-        System.out.println("Title: " + getTitle());
-        System.out.println("Description: " + getDescription());
-        System.out.println("tasks.Status: " + getStatus());
+    @Override
+    public String toString() {
+        return title;
     }
 }
