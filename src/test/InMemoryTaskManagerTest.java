@@ -1,4 +1,4 @@
-package tests;
+package test;
 
 
 import main.manager.InMemoryTaskManager;
@@ -79,5 +79,4 @@ class InMemoryTaskManagerTest {
         Task task2 = new Task("Задача 1", "Описание задачи 1", 1, Status.NEW);
         assertEquals(task1, task2, "Задачи с одинаковым id должны быть равны");
     }
-
 }
