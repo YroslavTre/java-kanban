@@ -1,0 +1,4 @@
+./tests/InMemoryHistoryManagerTest.java
+./tests/EpicTest.java
+./tests/InMemoryTaskManagerTest.java
+./tests/TaskTest.java
