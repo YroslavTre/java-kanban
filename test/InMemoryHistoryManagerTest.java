@@ -23,8 +23,8 @@ class InMemoryHistoryManagerTest {
         Task task = new Task("Task 1", "Description 1", 1, Status.NEW);
         historyManager.add(task);
         List<Task> history = historyManager.getHistory();
-        assertEquals(1, history.size(), "История должна содержать одну задачу");
-        assertEquals(task, history.get(0), "Задача должна совпадать");
+        assertEquals(1, history.size(), String.format("Ожидалось, что история задач будет содержать ровно одну задачу, но в ней %d", history.size()));
+        assertEquals(task, history.get(0), String.format("Ожидалось, что первой задачей в истории будет %s, но в истории %s", task, history.get(0)));
     }
 
     @Test
@@ -39,7 +39,7 @@ class InMemoryHistoryManagerTest {
     @Test
     void shouldLimitHistorySize() {
         for (int i = 1; i <= 15; i++) {
-            historyManager.add(new Task("Task " + i, "Description", i, Status.NEW));
+            historyManager.add(new Task(String.format("Task %d", i), "Description", i, Status.NEW));
         }
         List<Task> history = historyManager.getHistory();
         assertEquals(10, history.size(), "История должна содержать не более 10 задач");
