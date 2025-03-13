@@ -25,7 +25,7 @@ class FileBackedTaskManagerTest {
         manager = new FileBackedTaskManager(tempFile);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-            writer.write(""); // Очищаем файл
+            writer.write("");
         }
     }
 
@@ -42,7 +42,8 @@ class FileBackedTaskManagerTest {
     void testSaveMultipleTasks() {
         Task task1 = new Task("Задача 1", "Описание задачи 1", 1, Status.NEW);
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", 2, Status.NEW);
-        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", 3, Status.NEW, epic1.getId());
+        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1",
+                3, Status.NEW, epic1.getId());
 
         manager.createTask(task1);
         manager.createEpic(epic1);
@@ -68,7 +69,8 @@ class FileBackedTaskManagerTest {
     void testLoadMultipleTasks() throws IOException {
         Task task1 = new Task("Задача 1", "Описание задачи 1", 1, Status.NEW);
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", 2, Status.NEW);
-        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", 3, Status.NEW, epic1.getId());
+        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", 3,
+                Status.NEW, epic1.getId());
 
         manager.createTask(task1);
         manager.createEpic(epic1);

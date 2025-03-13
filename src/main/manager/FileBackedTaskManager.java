@@ -136,7 +136,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 int epicId = Integer.parseInt(element[5]);
                 return new Subtask(title, description, id, status, epicId);
             default:
-                throw new IllegalArgumentException("Неизвестный тип задачи: " + type);
+                throw new IllegalArgumentException(String.format("Неизвестный тип задачи: %d", type));
         }
     }
 
@@ -150,7 +150,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             for (int i = 1; i < lines.length; i++) {
                 Task task = manager.taskFromString(lines[i]);
                 if (task instanceof Epic) {
-                    System.out.println("Загрузка эпика: " + task);
+                    System.out.printf("Загрузка эпика: %s%n", task);
                     manager.createEpic((Epic) task);
                 } else if (task instanceof Subtask) {
                     manager.createSubtask((Subtask) task);
