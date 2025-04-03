@@ -6,12 +6,13 @@ import main.tasks.Status;
 import main.tasks.Subtask;
 import main.tasks.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest {
-    private InMemoryTaskManager taskManager;
+class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
     @BeforeEach
     void setUp() {
@@ -41,7 +42,9 @@ class InMemoryTaskManagerTest {
         Epic epic = new Epic("Эпик 1", "Описание эпика 1", 1, Status.NEW);
         taskManager.createEpic(epic);
 
-        Subtask subtask = new Subtask("Подзадача 1", "Описание подзадачи 1", 2, Status.NEW, epic.getId());
+        Subtask subtask = new Subtask("Подзадача 1", "Описание подзадачи 1", 2,
+                Status.NEW, epic.getId(), LocalDateTime.of(2024, 1, 1, 10, 0),
+                Duration.ofHours(1));
         taskManager.createSubtask(subtask);
 
         Subtask retrievedSubtask = taskManager.getSubtask(subtask.getId());
@@ -59,7 +62,9 @@ class InMemoryTaskManagerTest {
         taskManager.createEpic(epic);
         taskManager.getEpic(epic.getId());
 
-        Subtask subtask = new Subtask("Подзадача 1", "Описание подзадачи 1", 3, Status.NEW, epic.getId());
+        Subtask subtask = new Subtask("Подзадача 1", "Описание подзадачи 1", 3,
+                Status.NEW, epic.getId(), LocalDateTime.of(2024, 1, 1, 10, 0),
+                Duration.ofHours(1));
         taskManager.createSubtask(subtask);
         taskManager.getSubtask(subtask.getId());
 
@@ -75,5 +80,12 @@ class InMemoryTaskManagerTest {
         Task task1 = new Task("Задача 1", "Описание задачи 1", 1, Status.NEW);
         Task task2 = new Task("Задача 1", "Описание задачи 1", 1, Status.NEW);
         assertEquals(task1, task2, "Задачи с одинаковым id должны быть равны");
+    }
+
+    @Test
+    void testTasksWithSameIdConflict() {
+        Task task = new Task("Задача 1", "Описание задачи 1", 0, Status.NEW); // 0 - флаг для авто-ID
+        taskManager.createTask(task);
+        assertNotEquals(0, task.getId());
     }
 }
