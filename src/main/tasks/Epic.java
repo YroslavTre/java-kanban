@@ -1,5 +1,7 @@
 package main.tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -9,6 +11,41 @@ public class Epic extends Task {
     public Epic(String title, String description, int id, Status status) {
         super(title, description, id, status);
         this.subtasks = new HashMap<>();
+    }
+
+    @Override
+    public LocalDateTime getStartTime() {
+        if (subtasks.isEmpty()) {
+            return null;
+        }
+        return subtasks.values().stream()
+                .map(Subtask::getStartTime)
+                .filter(Objects::nonNull)
+                .min(LocalDateTime::compareTo)
+                .orElse(null);
+    }
+
+    @Override
+    public Duration getDuration() {
+        if (subtasks.isEmpty()) {
+            return null;
+        }
+        return subtasks.values().stream()
+                .map(Subtask::getDuration)
+                .filter(Objects::nonNull)
+                .reduce(Duration.ZERO, Duration::plus);
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        if (subtasks.isEmpty()) {
+            return null;
+        }
+        return subtasks.values().stream()
+                .map(Subtask::getEndTime)
+                .filter(Objects::nonNull)
+                .max(LocalDateTime::compareTo)
+                .orElse(null);
     }
 
     public void addSubtask(Subtask subtask) {

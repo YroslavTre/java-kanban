@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import main.tasks.Status;
 import main.tasks.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,8 +25,10 @@ class InMemoryHistoryManagerTest {
         Task task = new Task("Task 1", "Description 1", 1, Status.NEW);
         historyManager.add(task);
         List<Task> history = historyManager.getHistory();
-        assertEquals(1, history.size(), String.format("Ожидалось, что история задач будет содержать ровно одну задачу, но в ней %d", history.size()));
-        assertEquals(task, history.get(0), String.format("Ожидалось, что первой задачей в истории будет %s, но в истории %s", task, history.get(0)));
+        assertEquals(1, history.size(),
+                String.format("Ожидалось, что история задач будет содержать ровно одну задачу, но в ней %d", history.size()));
+        assertEquals(task, history.get(0),
+                String.format("Ожидалось, что первой задачей в истории будет %s, но в истории %s", task, history.get(0)));
     }
 
     @Test
@@ -81,7 +85,10 @@ class InMemoryHistoryManagerTest {
     @Test
     void shouldRemoveSubtaskFromHistoryWhenDeletedFromEpic() {
         Epic epic = new Epic("Epic 1", "Epic Description", 1, Status.NEW);
-        Subtask subtask = new Subtask("Subtask 1", "Subtask Description", 2, Status.NEW, epic.getId());
+        Subtask subtask = new Subtask("Subtask 1", "Subtask Description", 2, Status.NEW,
+                epic.getId(),
+                LocalDateTime.of(2025, 1, 1, 10, 0),
+                Duration.ofHours(1));
         historyManager.add(epic);
         historyManager.add(subtask);
         historyManager.remove(subtask.getId());
@@ -92,7 +99,10 @@ class InMemoryHistoryManagerTest {
     @Test
     void shouldNotHaveOrphanedSubtaskIdsInEpic() {
         Epic epic = new Epic("Epic 1", "Epic Description", 1, Status.NEW);
-        Subtask subtask = new Subtask("Subtask 1", "Subtask Description", 2, Status.NEW, epic.getId());
+        Subtask subtask = new Subtask("Subtask 1", "Subtask Description", 2, Status.NEW,
+                epic.getId(),
+                LocalDateTime.of(2025, 1, 1, 10, 0),
+                Duration.ofHours(1));
         historyManager.add(epic);
         historyManager.add(subtask);
         historyManager.remove(subtask.getId());

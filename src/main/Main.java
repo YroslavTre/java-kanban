@@ -7,6 +7,9 @@ import main.tasks.Status;
 import main.tasks.Subtask;
 import main.tasks.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Main {
     private static void printAllTasks(TaskManager manager) {
         System.out.println("Задачи:");
@@ -42,10 +45,14 @@ public class Main {
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", 0, Status.NEW);
         manager.createEpic(epic1);
 
-        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", 0, Status.NEW, epic1.getId());
+        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", 0,
+                Status.NEW, epic1.getId(), LocalDateTime.of(2025, 1, 1, 10, 0),
+                Duration.ofHours(1));
         manager.createSubtask(subtask1);
 
-        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", 0, Status.NEW, epic1.getId());
+        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", 0, Status.NEW,
+                epic1.getId(), LocalDateTime.of(2025, 1, 1, 10, 0),
+                Duration.ofHours(1));
         manager.createSubtask(subtask2);
 
         // Вызов методов для добавления в историю

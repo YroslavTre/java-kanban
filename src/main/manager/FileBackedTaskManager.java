@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
         private final File file;
@@ -66,8 +68,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-    private void save() throws ManagerSaveException {
-        String setOfParameters = "id,type,name,status,description,epic";
+    private void save() throws IllegalArgumentException {
+        String setOfParameters = "id,type,name,status,description,epic,startTime,duration";
 
         try (BufferedWriter writeTask = new BufferedWriter(new FileWriter(file))) {
             writeTask.write(setOfParameters);
@@ -91,7 +93,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 writeTask.newLine();
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при сохранении данных в файл", e);
+            throw new IllegalArgumentException("Ошибка при сохранении данных в файл", e);
         }
     }
 
@@ -100,6 +102,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
         setTask.append(task.getId()).append(",");
 
+        // Определяем тип задачи
         if (task instanceof Epic) {
             setTask.append("EPIC,");
         } else if (task instanceof Subtask) {
@@ -110,31 +113,40 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
         setTask.append(task.getTitle()).append(",");
         setTask.append(task.getStatus()).append(",");
-        setTask.append(task.getDescription());
+        setTask.append(task.getDescription()).append(",");
 
+        // Для подзадачи добавляем epicId, для остальных - пустое поле
         if (task instanceof Subtask) {
-            setTask.append(",").append(((Subtask) task).getEpicId());
+            setTask.append(((Subtask) task).getEpicId());
         }
+        setTask.append(",");
+
+        // Добавляем время
+        setTask.append(task.getStartTime() != null ? task.getStartTime() : "null").append(",");
+        setTask.append(task.getDuration() != null ? task.getDuration().toMinutes() : "null");
 
         return setTask.toString();
     }
 
     private Task taskFromString(String line) {
-        String[] element = line.split(",");
-        int id = Integer.parseInt(element[0]);
-        String type = element[1];
-        String title = element[2];
-        Status status = Status.valueOf(element[3]);
-        String description = element[4];
+        String[] parts = line.split(",");
+        int id = Integer.parseInt(parts[0]);
+        String type = parts[1];
+        String title = parts[2];
+        Status status = Status.valueOf(parts[3]);
+        String description = parts[4];
+        String epicIdStr = parts[5];
+        LocalDateTime startTime = "null".equals(parts[6]) ? null : LocalDateTime.parse(parts[6]);
+        Duration duration = "null".equals(parts[7]) ? null : Duration.ofMinutes(Long.parseLong(parts[7]));
 
         switch (type) {
             case "TASK":
-                return new Task(title, description, id, status);
+                return new Task(title, description, id, status, startTime, duration);
             case "EPIC":
                 return new Epic(title, description, id, status);
             case "SUBTASK":
-                int epicId = Integer.parseInt(element[5]);
-                return new Subtask(title, description, id, status, epicId);
+                int epicId = Integer.parseInt(epicIdStr);
+                return new Subtask(title, description, id, status, epicId, startTime, duration);
             default:
                 throw new IllegalArgumentException(String.format("Неизвестный тип задачи: %d", type));
         }
@@ -159,7 +171,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 }
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при загрузке данных из файла", e);
+            throw new IllegalArgumentException("Ошибка при загрузке данных из файла", e);
         }
 
         return manager;
