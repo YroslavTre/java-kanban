@@ -77,7 +77,17 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void createSubtask(Subtask subtask) {
         if (isTaskOverlapping(subtask)) {
-            throw new IllegalArgumentException("Подзадача пересекается по времени с существующей задачей");
+            throw new IllegalArgumentException(
+                    String.format(
+                            "Ошибка: Подзадача '%s' (ID: %d) пересекается по времени с другой задачей. " +
+                                    "Текущий интервал: %s - %s. " +
+                                    "Проверьте время начала или продолжительность.",
+                            subtask.getTitle(),
+                            subtask.getId(),
+                            subtask.getStartTime(),
+                            subtask.getEndTime()
+                    )
+            );
         }
         subtask.setId(currentId++);
         subtasks.put(subtask.getId(), subtask);

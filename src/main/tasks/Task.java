@@ -82,7 +82,8 @@ public class Task {
         if (startTime == null || duration == null) {
             return null;
         }
-        return startTime.plus(duration);
+        LocalDateTime endTime = startTime.plus(duration);  // Вычисляем конечное время
+        return endTime;
     }
 
     @Override
