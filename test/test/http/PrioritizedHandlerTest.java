@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PrioritizedHandlerTest extends HttpTaskServerTestBase {
 
     @Test
-    void getPrioritizedTasks_shouldReturn200AndSortedTasks() throws Exception {
+    void getPrioritizedTasksReturn200A() throws Exception {
         // Arrange
         LocalDateTime now = LocalDateTime.now();
 

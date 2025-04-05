@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TasksHandlerTest extends HttpTaskServerTestBase {
 
     @Test
-    void createTask_shouldReturn201AndSaveTask() throws Exception {
+    void createTaskReturn201() throws Exception {
         // Arrange
         Task task = new Task("Test", "Description", 0,  Status.NEW,
                 LocalDateTime.now(), Duration.ofMinutes(30));
@@ -33,7 +33,7 @@ class TasksHandlerTest extends HttpTaskServerTestBase {
     }
 
     @Test
-    void getTasks_shouldReturn200AndTasksList() throws Exception {
+    void getTasksReturn200() throws Exception {
         // Arrange
         Task task = new Task("Test", "Description",0,  Status.NEW);
         manager.createTask(task);
@@ -52,7 +52,7 @@ class TasksHandlerTest extends HttpTaskServerTestBase {
     }
 
     @Test
-    void deleteTask_shouldReturn200AndRemoveTask() throws Exception {
+    void deleteTaskReturn200() throws Exception {
         // Arrange
         Task task = new Task("Test", "Description", 0,  Status.NEW);
         manager.createTask(task);

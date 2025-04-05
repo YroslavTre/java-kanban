@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EpicsHandlerTest extends HttpTaskServerTestBase {
 
     @Test
-    void createEpic_shouldReturn201AndSaveEpic() throws Exception {
+    void createEpicReturn201() throws Exception {
         // Arrange
         Epic epic = new Epic("Эпик", "Описание эпика",0, Status.NEW);
         String json = gson.toJson(epic);
@@ -34,7 +34,7 @@ class EpicsHandlerTest extends HttpTaskServerTestBase {
     }
 
     @Test
-    void getEpicSubtasks_shouldReturn200AndSubtasks() throws Exception {
+    void getEpicSubtasksReturn200() throws Exception {
         // Arrange
         Epic epic = new Epic("Эпик", "Описание Эпика", 0, Status.NEW);  // Добавлен параметр id
         manager.createEpic(epic);

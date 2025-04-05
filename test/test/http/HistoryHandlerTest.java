@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class HistoryHandlerTest extends HttpTaskServerTestBase {
 
     @Test
-    void getHistory_shouldReturn200AndHistoryList() throws Exception {
+    void getHistoryReturn200() throws Exception {
         // Arrange
         LocalDateTime time = LocalDateTime.now();
 

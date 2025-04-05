@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class NegativeTests extends HttpTaskServerTestBase {
 
     @Test
-    void getNonExistentTask_shouldReturn404() throws Exception {
+    void getNonExistentTaskReturn404() throws Exception {
         // Act
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/tasks/999"))
@@ -28,7 +28,7 @@ class NegativeTests extends HttpTaskServerTestBase {
     }
 
     @Test
-    void createTaskWithTimeConflict_shouldReturn406() throws Exception {
+    void createTaskWithTimeConflictReturn406() throws Exception {
         // Arrange
         LocalDateTime time = LocalDateTime.now();
 
